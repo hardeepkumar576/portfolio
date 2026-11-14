@@ -1,0 +1,66 @@
+import React, { useEffect, useState } from 'react';
+import { ArrowDown, ArrowRight, ArrowUpRight, BriefcaseBusiness, Check, ChevronDown, Code2, Download, ExternalLink, Github, Globe2, GraduationCap, Layers3, Linkedin, Mail, MapPin, Menu, Phone, Server, Sparkles, X } from 'lucide-react';
+import { profile, experiences, projects, skills, education, aiProjects } from './data.js';
+
+const nav = [{ label: 'About', href: '#about' }, { label: 'Work', href: '#work' }, { label: 'Experience', href: '#experience' }, { label: 'Skills', href: '#skills' }, { label: 'Contact', href: '#contact' }];
+
+function SectionIntro({ index, eyebrow, heading, note }) {
+  return <div className="section-heading"><div className="section-kicker"><span>{index}</span>{eyebrow}</div><div className="heading-row"><h2>{heading}</h2>{note && <p>{note}</p>}</div></div>;
+}
+
+function Header() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => { const handler = () => setOpen(false); window.addEventListener('hashchange', handler); return () => window.removeEventListener('hashchange', handler); }, []);
+  return <header className="header"><div className="wrap header-inner"><a className="wordmark" href="#top" aria-label="Hardeep Kumar home"><span className="monogram">H<span>.</span></span><span>Hardeep Kumar</span></a><nav className={`nav ${open ? 'is-open' : ''}`} aria-label="Main navigation">{nav.map(item => <a onClick={() => setOpen(false)} key={item.href} href={item.href}>{item.label}</a>)}</nav><a href={profile.resume} className="header-resume" download>Resume <Download size={15}/></a><button type="button" className="mobile-menu" onClick={() => setOpen(!open)} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open}>{open ? <X size={23}/> : <Menu size={23}/>}</button></div></header>;
+}
+
+function CodeVisual() {
+  return <div className="hero-visual"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="code-window"><div className="window-toolbar"><span className="window-dots"><i/><i/><i/></span><span>developer.profile</span><Code2 size={16}/></div><div className="window-body"><div><span className="code-violet">const</span> engineer = {'{'}</div><div className="indent">name: <span className="code-yellow">'Hardeep Kumar'</span>,</div><div className="indent">focus: <span className="code-yellow">'Backend Systems'</span>,</div><div className="indent">stack: [</div><div className="indent2"><span className="code-mint">'PHP'</span>, <span className="code-mint">'Laravel'</span>,</div><div className="indent2"><span className="code-mint">'REST APIs'</span>, <span className="code-mint">'MySQL'</span></div><div className="indent">],</div><div className="indent">exploring: [<span className="code-yellow">'Python'</span>, <span className="code-yellow">'AI/ML'</span>]</div><div>{'}'};</div></div><div className="window-status"><span><i/> Available for work</span><span>Jaipur, India · Global</span></div></div><div className="floating-chip chip-top"><span className="chip-symbol"><Server size={19}/></span><span><strong>Backend-first</strong><small>Reliable & maintainable</small></span></div><div className="floating-chip chip-bottom"><span className="chip-symbol mint"><Globe2 size={19}/></span><span><strong>Open to opportunities</strong><small>India + worldwide</small></span></div></div>;
+}
+
+function Hero() {
+  return <section className="hero" id="top"><div className="wrap hero-layout"><div className="hero-copy"><div className="status-pill"><span className="status-dot"/> OPEN TO NEW OPPORTUNITIES</div><p className="hero-overline">HELLO, I'M HARDEEP KUMAR <span className="hello-line"/></p><h1>Engineering <span className="hero-accent">better</span> digital experiences<span className="period">.</span></h1><p className="hero-lede">Backend Developer with <strong>4+ years of experience</strong> building PHP, Laravel and API-powered business platforms. Expanding my skill set in <strong>Python and AI/ML.</strong></p><div className="hero-ctas"><a className="button button-dark" href="#work">Explore my projects <ArrowUpRight size={19}/></a><a className="button button-ghost" href={profile.resume} download>Download resume <Download size={18}/></a></div><div className="hero-foot"><span><MapPin size={17}/> Jaipur, India</span><span className="hero-foot-separator"/><span><Globe2 size={17}/> India & international roles</span></div></div><CodeVisual/></div><div className="wrap hero-bottom"><span>SCROLL TO EXPLORE</span><a aria-label="Scroll to about" href="#about"><ArrowDown size={19}/></a><span>PORTFOLIO / 2026</span></div></section>;
+}
+
+function Stats() {
+  return <div className="wrap stats-grid" aria-label="Professional highlights"><div><strong>4<span>+</span></strong><span>Years of professional experience</span></div><div><strong>07</strong><span>Selected business projects</span></div><div><strong>03</strong><span>Professional roles / periods</span></div><div><strong>∞</strong><span>Always learning & improving</span></div></div>;
+}
+
+function About() {
+  return <section className="section about" id="about"><div className="wrap"><SectionIntro index="01 /" eyebrow="THE PERSON BEHIND THE CODE" heading={<>Good software starts with <span className="muted-text">clear thinking.</span></>} /><div className="about-grid"><div className="about-quote">“I enjoy solving complex business problems with simple, dependable engineering.”<span className="quote-decoration">↗</span></div><div className="about-text"><p>I'm a backend-focused developer based in Jaipur, India. My experience includes building ERP, CRM, HRMS, education, eCommerce and booking systems for real operational needs.</p><p>I work with API integrations, relational databases and production deployment. I also enjoy learning technologies beyond my current stack — especially Python and AI/ML — to grow into broader software engineering roles.</p><div className="about-mini"><span><Check size={17}/> Full development lifecycle</span><span><Check size={17}/> API & database architecture</span><span><Check size={17}/> Collaboration across teams</span></div></div></div></div></section>;
+}
+
+function ProjectCard({ item, index }) {
+  const [expanded, setExpanded] = useState(false);
+  return <article className={`project-card accent-${item.accent}`}><div className="project-card-top"><span>{item.number} / FEATURED PROJECT</span><span className="project-ornament"><Layers3 size={23}/></span></div><div className="project-art" aria-hidden="true"><div className="mock-stack stack-one"/><div className="mock-stack stack-two"/><div className="mock-stack stack-three"><span className="mock-dot"/><span className="mock-line"/><span className="mock-line short"/></div></div><div className="project-body"><span className="category-label">{item.category}</span><h3>{item.title}</h3><p className="project-subtitle">{item.subtitle}</p><p className="project-description">{item.summary}</p><div className="tag-row">{item.stack.map(tag => <span key={tag}>{tag}</span>)}</div><button className="detail-toggle" type="button" onClick={() => setExpanded(!expanded)} aria-expanded={expanded}>Project details <ChevronDown size={16} className={expanded ? 'rotate' : ''}/></button>{expanded && <p className="project-detail">{item.detail}</p>}</div></article>;
+}
+
+function Work() {
+  const [showAll, setShowAll] = useState(false);
+  const visible = showAll ? projects : projects.slice(0, 4);
+  return <section className="section work-section" id="work"><div className="wrap"><SectionIntro index="02 /" eyebrow="SELECTED WORK" heading={<>Things I've helped <span className="muted-text">build.</span></>} note="Practical products across business operations, education and SaaS. Descriptions reflect my resume; confidential code is not published."/><div className="project-grid">{visible.map((item, index) => <ProjectCard key={item.number} item={item} index={index}/>)}</div><div className="centered-action"><button type="button" className="button button-outline" onClick={() => setShowAll(!showAll)}>{showAll ? 'Show fewer projects' : 'View all 7 projects'} <ArrowRight size={18}/></button></div></div></section>;
+}
+
+function Experience() {
+  return <section className="section experience" id="experience"><div className="wrap"><SectionIntro index="03 /" eyebrow="CAREER JOURNEY" heading={<>Where I've made <span className="muted-text">an impact.</span></>} note="Hands-on development, integrations and deployment experience in production business applications."/><div className="experience-list">{experiences.map((job,i) => <article key={`${job.company}-${job.period}`} className="experience-item"><div className="experience-number">0{i+1}</div><div className="experience-role"><div className="experience-job-title"><h3>{job.role}</h3>{job.current && <span className="current-label"><i/> CURRENT</span>}</div><p>{job.company}</p><div className="experience-period">{job.period} <span>·</span> {job.place}</div></div><div className="experience-description"><p>{job.description}</p><ul>{job.highlights.map(line=><li key={line}>{line}</li>)}</ul></div></article>)}</div></div></section>;
+}
+
+function Skills() {
+  return <section className="section skills-section" id="skills"><div className="wrap"><SectionIntro index="04 /" eyebrow="TECHNOLOGIES" heading={<>A toolkit built for <span className="muted-text">real products.</span></>} note="Backend is my core strength. I also have cross-stack and deployment experience."/><div className="skills-grid">{skills.map((group,i)=><div className="skill-card" key={group.title}><div className="skill-card-index">0{i+1} <span> / 03</span></div><h3>{group.title}</h3><p>{group.label}</p><div className="skill-list">{group.items.map(item=><span key={item}>{item}</span>)}</div></div>)}</div><div className="learning-banner"><div className="learning-icon"><Sparkles size={24}/></div><div><div className="learning-eyebrow">CURRENTLY EXPANDING MY SKILLS</div><h3>Python · Artificial Intelligence · Machine Learning</h3><p>Currently exploring Python and AI/ML concepts. This is a learning focus, not a claim of professional AI/ML experience.</p>{aiProjects.length > 0 && <div className="ai-project-list">{aiProjects.map(p=><a key={p.title} href={p.url} target="_blank" rel="noreferrer">{p.title} <ExternalLink size={15}/></a>)}</div>}</div><span className="learning-label">LEARNING PATH</span></div></div></section>;
+}
+
+function Education() {
+  return <section className="section education" id="education"><div className="wrap"><SectionIntro index="05 /" eyebrow="EDUCATION & DEVELOPMENT" heading={<>Built on a strong <span className="muted-text">foundation.</span></>}/><div className="education-cards">{education.map((item,i)=><div className="education-card" key={item.qualification}><span className="education-icon"><GraduationCap size={22}/></span><span className="education-date">{item.date}</span><h3>{item.qualification}</h3><p>{item.institute}</p></div>)}</div></div></section>;
+}
+
+function Contact() {
+  const [copied, setCopied] = useState(false);
+  async function copyEmail(){ try { await navigator.clipboard.writeText(profile.email); setCopied(true); window.setTimeout(()=>setCopied(false),2000); } catch { window.location.href=`mailto:${profile.email}`; } }
+  return <section className="contact-section" id="contact"><div className="wrap contact-grid"><div><div className="section-kicker light"><span>06 /</span> LET'S CONNECT</div><h2>Let's build something <em>meaningful.</em></h2><p>Interested in working together? I'm open to backend development roles, software engineering opportunities and relevant collaborations in India and internationally.</p><div className="contact-actions"><a className="button button-mint" href={`mailto:${profile.email}?subject=Portfolio%20Inquiry`}>Get in touch <ArrowUpRight size={19}/></a><a className="button button-transparent" href={profile.resume} download>Download resume <Download size={18}/></a></div></div><div className="contact-panel"><div className="contact-panel-label">DIRECT CONTACT</div><div className="contact-method"><span><Mail size={18}/> EMAIL</span><button type="button" title="Copy email address" onClick={copyEmail}>{profile.email} {copied ? <Check size={17}/> : <ArrowUpRight size={17}/>}</button></div><div className="contact-method"><span><Phone size={18}/> PHONE</span><a href={`tel:${profile.phone}`}>{profile.phone} <ArrowUpRight size={17}/></a></div><div className="contact-method"><span><MapPin size={18}/> BASED IN</span><strong>{profile.location}</strong></div>{(profile.github || profile.linkedin) && <div className="socials">{profile.github && <a href={profile.github} target="_blank" rel="noreferrer"><Github size={17}/> GitHub <ArrowUpRight size={15}/></a>}{profile.linkedin && <a href={profile.linkedin} target="_blank" rel="noreferrer"><Linkedin size={17}/> LinkedIn <ArrowUpRight size={15}/></a>}</div>}</div></div></section>;
+}
+
+function Footer() {
+  return <footer className="footer"><div className="wrap footer-inner"><a href="#top" className="footer-logo">H<span>.</span></a><p>© {new Date().getFullYear()} {profile.name}. Designed & built with React.</p><a href="#top">Back to top ↑</a></div></footer>;
+}
+
+export default function App(){ return <><Header/><main><Hero/><Stats/><About/><Work/><Experience/><Skills/><Education/><Contact/></main><Footer/></>; }
